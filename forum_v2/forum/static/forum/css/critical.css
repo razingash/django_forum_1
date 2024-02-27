@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+	background: #211e1e;
+	/*background: linear-gradient(45deg, #211e1e, #272424);*/
+	margin: 0px;
+}
+
+.svg__list {
+    position: absolute;
+    visibility: hidden;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+}
