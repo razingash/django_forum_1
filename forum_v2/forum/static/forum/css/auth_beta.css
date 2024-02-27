@@ -29,7 +29,7 @@
 
 .header__item{
     background: #332f2f;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #000000;
     padding: 6px 20px 6px 20px;
     border-radius: 15px 15px 0 0;
     text-decoration: none;
@@ -62,7 +62,7 @@
 .input__mail, .input__password, .input__nickname{
     border: 2px solid #ffffff7a;
     border-radius: 3px 3px 3px 3px;
-    color: white;
+    color: #ffffff;
     background: #0000009c;
 }
 /*

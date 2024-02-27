@@ -8,7 +8,7 @@
     border-radius: 10px;
 }
 .profile__face{
-    color: white;
+    color: #ffffff;
     margin: 15px 15px 0 15px;
 }
 .profile__avatar{
@@ -18,7 +18,7 @@
 }
 .profile__info{
     padding: 10px 0 0 0;
-    color: white;
+    color: #ffffff;
 }
 .profile__nickname{
     display: flex;
@@ -43,7 +43,7 @@
     align-items: flex-end;
     text-decoration: none;
     background: #1c1c1d;
-    color: white;
+    color: #ffffff;
     border-radius: 13px;
     padding: 4px 8px 4px 8px;
     cursor: pointer;
@@ -77,11 +77,11 @@
     padding: 20px;
     overflow-y: auto;
     min-width: 400px;
-    border: 1px solid wheat;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.5),
-                0 0 4px rgba(0,0,0,0.1),
-                0 0 8px rgba(0,0,0,0.1),
-                0 0 16px rgba(0,0,0,0.1);
+    border: 1px solid #f5deb3;
+    box-shadow: 0 0 0 2px #00000070,
+                0 0 4px #00000019,
+                0 0 8px #00000019,
+                0 0 16px #00000019;
 }
 .card__username{
     display: flex;
@@ -91,7 +91,7 @@
     font-family: 'Roboto', sans-serif;
 }
 .card__close {
-    color: white;
+    color: #ffffff;
     position: absolute;
     top: 0;
     right: 10px;
@@ -125,7 +125,7 @@
 }
 .card__description{
     min-height: 200px;
-    border: 1px solid black;
+    border: 1px solid #000000;
     margin: 10px 0 30px 0;
     padding: 10px;
     background: #ffffff30;
@@ -180,7 +180,7 @@
     margin: 0 10px 0 10px;
     border-radius: 13px;
     padding: 4px 8px 4px 8px;
-    color: wheat;
+    color: #f5deb3;
 }
 .item__philosophy{
 
@@ -209,13 +209,13 @@
 }
 
 .hedge__first-line{
-    background: white;
+    background: #ffffff;
     width: 100%;
     height: 1px;
 }
 
 .hedge__second-line{
-    background: white;
+    background: #ffffff;
     width: 80%;
     height: 1px;
     margin-top: 10px;
@@ -258,7 +258,7 @@
     margin-right: 3px;
 }
 .mini_categories{
-    color: wheat;
+    color: #f5deb3;
     cursor: pointer;
 }
 .second-header__list{
@@ -273,7 +273,7 @@
 }
 .second-header__item{
     display: flex;
-    color: wheat;
+    color: #f5deb3;
     padding: 0 10px 0 10px;
     cursor: pointer;
     text-decoration: none;
@@ -295,15 +295,15 @@
     height: 22px;
 }
 .minisearch__input{
-    border: 2px solid wheat;
+    border: 2px solid #f5deb3;
     background: #332f2f;
     width: 100%;
-    color: rgb(237 237 237);
+    color: #ededed;
     font-family: 'Comic Sans MS';
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.5),
-                0 0 4px rgba(0,0,0,0.1),
-                0 0 8px rgba(0,0,0,0.1),
-                0 0 16px rgba(0,0,0,0.1);
+    box-shadow: 0 0 0 2px #00000070,
+                0 0 4px #00000019,
+                0 0 8px #00000019,
+                0 0 16px #00000019;
 }
 
 
@@ -312,7 +312,7 @@
     display: block;
     width: 75%;
     background: #585353;
-    box-shadow: inset 0 0 20px 40px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 20px 40px #0000003f;
 }
 
 
@@ -325,14 +325,14 @@
 .content-field__activity{
     display: block;
     border-radius: 0 40px 0 0;
-    border: 2px solid black;
+    border: 2px solid #000000;
     margin-top: 20px;
 }
 
 .content-field__contribution{
     display: block;
     border-radius: 15px;
-    border: 2px solid black;
+    border: 2px solid #000000;
     margin-top: 20px;
 }
 
@@ -358,21 +358,21 @@
 
 .activity__date{
     display: block;
-    color: rgb(219, 219, 219);
+    color: #dbdbdb;
     margin-left: 10px;
 }
 
 .activity__link, .DDA__link, .header__link{
     display: block;
     text-decoration: none;
-    color: wheat;
+    color: #f5deb3;
 }
 .activity__link{
     padding-left: 10px;
 }
 
 .activity__rating{
-    color: rgb(219, 219, 219);
+    color: #dbdbdb;
 }
 .positive{
     color: #40e62d;
@@ -438,14 +438,14 @@
     flex-direction: column;
     width: 400px;
     background: #232121;
-    color: #fff;
+    color: #ffffff;
     border-radius: 10px;
     padding: 10px 20px 20px 20px;
     border: 1px solid #ffa600;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.5),
-                0 0 4px rgba(0,0,0,0.1),
-                0 0 8px rgba(0,0,0,0.1),
-                0 0 16px rgba(0,0,0,0.1);
+    box-shadow: 0 0 0 2px #00000070,
+                0 0 4px #00000019,
+                0 0 8px #00000019,
+                0 0 16px #00000019;
 }
 .delete_header{
     display: flex;
@@ -480,7 +480,7 @@
     justify-content: center;
 }
 .hedge_remove_friend_top_line{
-    background: white;
+    background: #ffffff;
     width: 100%;
     height: 1px;
 }
@@ -492,14 +492,14 @@
     border-radius: 5px 5px 5px 5px;
     margin-top: 20px;
     padding: 10px;
-    box-shadow: 0 1px 2px 0 rgba(255 245 0 / 70%),
-                1px 2px 4px 0 rgba(255 245 0 / 70%),
-                2px 4px 8px 0 rgba(255 245 0 / 70%),
-                2px 4px 16px 0 rgba(255 245 0 / 70%);
+    box-shadow: 0 1px 2px 0 #fff500b2,
+                1px 2px 4px 0 #fff500b2,
+                2px 4px 8px 0 #fff500b2,
+                2px 4px 16px 0 #fff500b2;
 }
 
 .friend__avatar, .event__user-avatar{
-    border: 2px solid black;
+    border: 2px solid #000000;
     width: 40px;
 }
 
@@ -512,7 +512,7 @@
 }
 
 .friend__nickname, .event__user-nickname{
-    color: pink;
+    color: #ffc0cbff;
     text-decoration: none;
 }
 
@@ -554,7 +554,7 @@
     display: flex;
     align-items: flex-end;
     color: #f94040;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;
     cursor: pointer;
 }
 
@@ -562,7 +562,7 @@
     display: flex;
     justify-content: center;
     padding: 15px 0 15px 0;
-    color: rgb(219, 219, 219);
+    color: #dbdbdb;
 }
 
 
@@ -570,7 +570,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 0 0 0 0;
-    border: 2px solid rgb(207, 201, 201);
+    border: 2px solid #cfc9c9;
     margin-top: 20px;
     padding: 10px 20px 10px 20px;
 }
@@ -594,7 +594,7 @@
     margin-left: 20px;
     padding: 4px 8px 4px 8px;
     border-radius: 10px 10px 10px 10px;
-    border: 2px solid black;
+    border: 2px solid #000000;
     background: #32d020;
     color: #ffffff;
     font-family: 'Comic Sans MS';
@@ -645,8 +645,8 @@
     border-radius: 5px 5px 5px 5px;
     font-family: 'Comic Sans MS';
     font-size: 14px;
-    color: white;
-    background: rgb(211, 160, 30);
+    color: #ffffff;
+    background: #d3a01e;
 }
 
 .event__message{
@@ -667,7 +667,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    color: rgb(219, 219, 219);
+    color: #dbdbdb;
     margin-top: 10px;
 }
 
@@ -685,59 +685,59 @@
     cursor: pointer;
     padding: 2px 6px 2px 6px;
     border-radius: 5px 5px 5px 5px;
-    border: 2px solid black;
-    color: black;
+    border: 2px solid #000000;
+    color: #000000;
 }
 
 .event__choose-accept{
-    background: rgb(83, 218, 83);
+    background: #53da53;
 }
 .event__choose-reject{
-    background: rgb(218, 85, 83);
+    background: #da5553;
 }
 
 
 
 .event__debates{
-    box-shadow: 0 1px 2px 0 rgba(255, 0, 76, 0.7),
-                1px 2px 4px 0 rgba(255, 0, 76, 0.7),
-                2px 4px 8px 0 rgba(255, 0, 76, 0.7),
-                2px 4px 16px 0 rgba(255, 0, 76, 0.7);
+    box-shadow: 0 1px 2px 0 #ff004cb2,
+                1px 2px 4px 0 #ff004cb2,
+                2px 4px 8px 0 #ff004cb2,
+                2px 4px 16px 0 #ff004cb2;
 }
 
 .event__reply{
-    box-shadow: 0 1px 2px 0 rgba(250, 128, 14, 0.775),
-                1px 2px 4px 0 rgba(250, 128, 14, 0.775),
-                2px 4px 8px 0 rgba(250, 128, 14, 0.775),
-                2px 4px 16px 0 rgba(250, 128, 14, 0.775);
+    box-shadow: 0 1px 2px 0 #fa800ec5,
+                1px 2px 4px 0 #fa800ec5,
+                2px 4px 8px 0 #fa800ec5,
+                2px 4px 16px 0 #fa800ec5;
 }
 
 .event__invite{
-    box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.786),
-                1px 2px 4px 0 rgba(255, 255, 255, 0.786),
-                2px 4px 8px 0 rgba(255, 255, 255, 0.786),
-                2px 4px 16px 0 rgba(255, 255, 255, 0.786);
+    box-shadow: 0 1px 2px 0 #ffffffc8,
+                1px 2px 4px 0 #ffffffc8,
+                2px 4px 8px 0 #ffffffc8,
+                2px 4px 16px 0 #ffffffc8;
 }
 
 .event__friend-undefined{
-    box-shadow: 0 1px 2px 0 rgba(21, 234, 60, 0.786),
-                1px 2px 4px 0 rgba(21, 234, 60, 0.786),
-                2px 4px 8px 0 rgba(21, 234, 60, 0.786),
-                2px 4px 16px 0 rgba(21, 234, 60, 0.786);
+    box-shadow: 0 1px 2px 0 #15ea3cc8,
+                1px 2px 4px 0 #15ea3cc8,
+                2px 4px 8px 0 #15ea3cc8,
+                2px 4px 16px 0 #15ea3cc8;
 }
 
 .event__friend-woman{
-    box-shadow: 0 1px 2px 0 rgba(227, 16, 251, 0.786),
-                1px 2px 4px 0 rgba(227, 16, 251, 0.786),
-                2px 4px 8px 0 rgba(227, 16, 251, 0.786),
-                2px 4px 16px 0 rgba(227, 16, 251, 0.786);
+    box-shadow: 0 1px 2px 0 #e310fbc8,
+                1px 2px 4px 0 #e310fbc8,
+                2px 4px 8px 0 #e310fbc8,
+                2px 4px 16px 0 #e310fbc8;
 }
 
 .event__friend-man{
-    box-shadow: 0 1px 2px 0 rgba(0, 84, 251, 0.96),
-                1px 2px 4px 0 rgba(0, 84, 251, 0.96),
-                2px 4px 8px 0 rgba(0, 84, 251, 0.96),
-                2px 4px 16px 0 rgba(0, 84, 251, 0.96);
+    box-shadow: 0 1px 2px 0 #0054fbf4,
+                1px 2px 4px 0 #0054fbf4,
+                2px 4px 8px 0 #0054fbf4,
+                2px 4px 16px 0 #0054fbf4;
 }
 
 

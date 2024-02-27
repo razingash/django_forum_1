@@ -33,12 +33,12 @@
 }
 
 .settings_menu__item:hover {
-    background: wheat;
-    color: black !important;
+    background: #f5deb3;
+    color: #000000 !important;
 }
 .settings_menu__item {
     display: flex;
-    color: wheat;
+    color: #f5deb3;
     padding: 0 10px 0 10px;
     cursor: pointer;
     text-decoration: none;
@@ -87,14 +87,14 @@
     margin-left: 10px;
 }
 .form-label, .specialization{
-    color: white;
+    color: #ffffff;
 }
 .tags__header{
-    color: white;
+    color: #ffffff;
     margin-bottom: 5px;
 }
 .tags_list{
-    color: rgb(219, 219, 219);
+    color: #dbdbdb;
 }
 
 .form_checkbox-list{

@@ -20,7 +20,6 @@
     left: 0;
     width: 100%;
     min-height: 20em;
-    background: #eee8aa6e;
 }
 .search__form__results::-webkit-scrollbar{
     width: 0;
@@ -60,7 +59,7 @@
 }
 .advanced_search__form{
     width: 90%;
-    margin: 0 0px 0 10px;
+    margin: 0 0 0 10px;
 }
 .search__input {
     border: 2px solid black;
@@ -148,7 +147,7 @@
 .bunch__author{
     display: flex;
     flex-direction: column;
-    color: #dddddd;
+    color: #ececec;
 }
 .author__lvl{
     display: flex;
@@ -157,9 +156,8 @@
     align-items: center;
 }
 .author__lvl__input{
-    border: 1px solid wheat;
+    border: 1px solid #f5deb3;
     background: #585353;
-    color: rgb(8, 7, 7);
     font-family: 'Comic Sans MS';
     margin: 0 5px 0 5px;
     border-radius: 6px;
@@ -185,7 +183,7 @@
     top: 4px;
     width: 12px; 
     height: 12px; 
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 3px;
 }
 .bunch__tags{
@@ -208,7 +206,7 @@
 
 .bunch__tag > INPUT[value="0"] + .checkbox__item,
 .p_orientation__item > INPUT[value="0"] + .checkbox__item{
-    color: #fff;
+    color: #ffffff;
     background-color: currentColor;
     border-color: currentColor;
     border-radius: 10px;
