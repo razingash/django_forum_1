@@ -1,5 +1,9 @@
-//поиск в заголовке
-document.addEventListener('DOMContentLoaded', function() {
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.querySelector('html').setAttribute('data-mode', savedTheme);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
     const crossButton = document.querySelector('.header__svg-cross');
     const crossButton2 = document.querySelector('.header__search');
     const searchContainer = document.querySelector('.search__container');
@@ -15,16 +19,33 @@ document.addEventListener('DOMContentLoaded', function() {
         searchContainer.classList.add('active');
     });
 
-    items.forEach(function(item) {
-        item.addEventListener('click', function() {
+    items.forEach(function (item) {
+        item.addEventListener('click', function () {
 
-          items.forEach(function(innerItem) {
-              innerItem.classList.remove('active');
-          });
-          searchResults.innerHTML = '';
-          item.classList.add('active');
+            items.forEach(function (innerItem) {
+                innerItem.classList.remove('active');
+            });
+            searchResults.innerHTML = '';
+            item.classList.add('active');
         });
     });
-    const crossButtonQuestion = document.querySelector('.header__svg-cross');
-    const crossButtonCross = document.querySelector('.header__search');
+
+
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const changeThemeButton = document.querySelector('.theme__button');
+    const htmlElement = document.querySelector('html');
+
+
+    changeThemeButton.addEventListener('click', function () {
+        const currentTheme = htmlElement.getAttribute('data-mode');
+        if (currentTheme === 'dark') {
+            htmlElement.setAttribute('data-mode', 'light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            htmlElement.setAttribute('data-mode', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    });
 });

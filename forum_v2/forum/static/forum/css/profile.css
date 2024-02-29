@@ -145,7 +145,7 @@
     padding: 2px 8px 2px 8px;
     border-radius: 14px;
     border: 1px solid currentColor;
-    color: #d0d0d0;
+    color: #cacaca;
 }
 .card__sex{
     position: absolute;
@@ -511,8 +511,8 @@
     padding-left: 10px;
 }
 
-.friend__nickname, .event__user-nickname{
-    color: #ffc0cbff;
+.friend__nickname, .event__user-nickname {
+    color: #fff900;
     text-decoration: none;
 }
 
@@ -540,16 +540,6 @@
     flex-direction: row;
 }
 
-.svg-cross{
-    width: 20px;
-    fill: #e6362d;
-}
-
-.svg-check_mark{
-    width: 30px;
-    fill: #40e62d;
-}
-
 .friend__remove{
     display: flex;
     align-items: flex-end;
@@ -565,19 +555,6 @@
     color: #dbdbdb;
 }
 
-
-.content-field__DDA{
-    display: flex;
-    flex-direction: column;
-    border-radius: 0 0 0 0;
-    border: 2px solid #cfc9c9;
-    margin-top: 20px;
-    padding: 10px 20px 10px 20px;
-}
-
-.content-field__DDA > div{
-    margin-top: 5px;
-}
 
 .DDA__specializations{
     display: flex;
@@ -738,18 +715,6 @@
                 1px 2px 4px 0 #0054fbf4,
                 2px 4px 8px 0 #0054fbf4,
                 2px 4px 16px 0 #0054fbf4;
-}
-
-
-
-#friend__removing__toggle{
-    display: none;
-}
-#friend__removing__toggle:checked ~ .friend__actions-split{
-    display: flex;
-}
-#friend__removing__toggle:checked ~ .friend__actions__invisible > .friend__golem > .svg-cross > .svg-cross{
-    fill: #40e62d;
 }
 
 

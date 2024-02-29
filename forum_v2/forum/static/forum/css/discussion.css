@@ -17,7 +17,7 @@
     padding-bottom: 20px;
 }
 .discussion__info{
-    border: 2px solid #c1c1c1;
+    border: 2px solid #cacaca;
     border-radius: 8px;
     margin: 25px;
     padding: 15px;
@@ -29,14 +29,14 @@
 .discussion__creation_date{
     color: #dbdbdb;
 }
-.discussion__author{
+.discussion__author {
     text-decoration: none;
-    color: #fe4e4e;
+    color: #f94040;
 }
 .discussion__theme {
     display: block;
     text-decoration: none;
-    color: #c1c1c1;
+    color: #cacaca;
     font-size: 20px;
     margin: 10px 0 10px 10px;
 }
@@ -44,10 +44,10 @@
 
 }
 
-.discussion__survey__theme{
+.discussion__survey__theme {
     display: flex;
     justify-content: center;
-    color: #d0d0d0;
+    color: #cacaca;
 }
 .discussion__survey__bars{
     display: flex;
@@ -97,9 +97,9 @@
     top: 0;
     right: 0;
 }
-.survey__bar__weight{
+.survey__bar__weight {
     display: flex;
-    color: #d0d0d0;
+    color: #cacaca;
 }
 .survey__results{
     margin: 0 10px 0 10px;

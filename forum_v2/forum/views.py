@@ -453,8 +453,10 @@ class DiscussionPage(DataMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         comments = DiscussionComments.objects.select_related('comment', 'comment__author', 'comment__parent_comment', 'comment__parent_comment__author')
-        comments = comments.only('id', 'comment__id', 'comment__upload_date', 'comment__comment', 'comment__rating', 'comment__author__avatar',
-                                 'comment__author__username', 'comment__parent_comment__author__username').filter(DDA_id=self.kwargs.get('discussion_id')).order_by('-id')
+        comments = comments.only('id', 'comment__id', 'comment__upload_date', 'comment__comment', 'comment__rating',
+                                 'comment__author__avatar',
+                                 'comment__author__username', 'comment__parent_comment__author__username').filter(
+            DDA_id=self.kwargs.get('discussion_id')).order_by('id')
 
         paginator = Paginator(comments, self.paginate_by)
         page_number = self.request.GET.get('page')

@@ -20,4 +20,5 @@ class DataMixin:
         unlogged_header = guest_header.copy()
         context['user_header'] = logged_header
         context['guest_header'] = unlogged_header
+        print(context)
         return context
