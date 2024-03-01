@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.core.paginator import Paginator
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch, Q, Count
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -390,7 +390,7 @@ class DiscussionCreatePage(LoginRequiredMixin, CreateView, DataMixin):
 
 class DiscussionsPage(DataMixin, ListView):
     model = Discussion
-    paginate_by = 5
+    paginate_by = 10
     ordering = ['-id']
     template_name = 'forum/discussions.html'
     context_object_name = 'discussions'
@@ -400,17 +400,92 @@ class DiscussionsPage(DataMixin, ListView):
         tags = InterlocutionTags.objects.only('id', 'name').all()
         author_or = UserDescription.UserPoliticalOrientation.choices
         if self.request.user.is_authenticated:
-            mix = self.get_user_context(title='discussions', user_id=self.request.user.id, tags=tags, p_orient=author_or)
+            mix = self.get_user_context(title='discussions', user_id=self.request.user.id, tags=tags,
+                                        p_orients=author_or)
         else:
-            mix = self.get_user_context(title='discussion', tags=tags, p_orient=author_or)
+            mix = self.get_user_context(title='discussion', tags=tags, p_orients=author_or)
         return context | mix
 
-    def get_queryset(self):
-        queryset = super().get_queryset().prefetch_related('discussiontags_set__tag')
+    def get_queryset(self):  # p_orient работает не так как теги()
+        queryset = super().get_queryset()
+        tags_included = self.request.GET.getlist('tag[include]')
+        tags_excluded = self.request.GET.getlist('tag[exclude]')
+        p_orient_included = self.request.GET.getlist('orientation[include]')
+        p_orient_excluded = self.request.GET.getlist('orientation[exclude]')
+        print(f'p_orient_excluded:{p_orient_excluded}, p_orient_included: {p_orient_included}')
+        if len(p_orient_included) == 0 and len(p_orient_excluded) == 0:
+            print('CASE 1 works')
+            queryset = queryset.prefetch_related('discussiontags_set__tag')
+            if len(tags_included) == 0 and len(tags_excluded) == 0:
+                queryset = queryset
+            elif len(tags_included) != 0 and len(tags_excluded) != 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).distinct().annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).exclude(
+                    discussiontags__tag__in=tags_excluded)
+            elif len(tags_included) != 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).distinct().annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included))
+            elif len(tags_excluded) != 0:
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded)
+        elif len(p_orient_included) != 0 and len(p_orient_excluded) != 0:
+            queryset = queryset.prefetch_related(
+                Prefetch('creator__userdescription', queryset=UserDescription.objects.only('political_orientation')),
+                Prefetch('discussiontags_set__tag', queryset=InterlocutionTags.objects.all())
+            ).filter(creator__userdescription__political_orientation__in=p_orient_included).distinct().exclude(
+                creator__userdescription__political_orientation__in=p_orient_excluded)
+            if len(tags_included) == 0 and len(tags_excluded) == 0:
+                queryset = queryset
+            elif len(tags_included) != 0 and len(tags_excluded) != 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
+                    num_tags=Count('discussiontags'))
+            elif len(tags_excluded) == 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+            elif len(tags_included) == 0:
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
+                    num_tags=Count('discussiontags')).exclude(num_tags=len(tags_excluded)).distinct()
+        elif len(p_orient_included) == 0:
+            queryset = queryset.prefetch_related(
+                Prefetch('creator__userdescription', queryset=UserDescription.objects.only('political_orientation')),
+                Prefetch('discussiontags_set__tag', queryset=InterlocutionTags.objects.all())
+            ).exclude(creator__userdescription__political_orientation__in=p_orient_excluded)
+            if len(tags_included) == 0 and len(tags_excluded) == 0:
+                queryset = queryset
+            elif len(tags_included) != 0 and len(tags_excluded) != 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
+                    num_tags=Count('discussiontags'))
+            elif len(tags_excluded) == 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+            elif len(tags_included) == 0:
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
+                    num_tags=Count('discussiontags')).exclude(num_tags=len(tags_excluded)).distinct()
+        elif len(p_orient_excluded) == 0:
+            queryset = queryset.prefetch_related(
+                Prefetch('creator__userdescription', queryset=UserDescription.objects.only('political_orientation')),
+                Prefetch('discussiontags_set__tag', queryset=InterlocutionTags.objects.all())
+            ).filter(creator__userdescription__political_orientation__in=p_orient_included).distinct()
+            if len(tags_included) == 0 and len(tags_excluded) == 0:
+                queryset = queryset
+            elif len(tags_included) != 0 and len(tags_excluded) != 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
+                    num_tags=Count('discussiontags'))
+            elif len(tags_excluded) == 0:
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+            elif len(tags_included) == 0:
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
+                    num_tags=Count('discussiontags')).exclude(num_tags=len(tags_excluded)).distinct()
         return queryset
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
+        # print(request.POST)
         if request.POST.get('request_type') == 'discussion_grade':
             action = request.POST.get('action')
             discussion_id = request.POST.get('discussion_id')

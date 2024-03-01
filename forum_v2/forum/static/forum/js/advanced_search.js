@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateCheckbox(checkbox) {
-        // Получаем текущее значение
         let currentValue = parseInt(checkbox.value);
         currentValue = (currentValue + 1) % 3;
         checkbox.value = currentValue;
@@ -91,4 +90,44 @@ document.addEventListener('DOMContentLoaded', function () {
         // Добавляем класс состояния только выбранному чекбоксу, соответствующему текущему значению
         checkbox.parentElement.classList.add(`state_${currentValue}`);//
     }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    function getSelectedInfo(checkboxes) {
+        const selectedTags = [];
+        checkboxes.forEach((checkbox) => {
+            if (parseInt(checkbox.value) === 1) {
+                selectedTags.push({
+                    id: checkbox.id,
+                    value: 'include'
+                });
+            }
+            if (parseInt(checkbox.value) === 2) {
+                selectedTags.push({
+                    id: checkbox.id,
+                    value: 'exclude'
+                });
+            }
+        });
+        return selectedTags;
+    }
+
+    document.querySelector('.bunch__apply').addEventListener('click', function () {
+        //const tagsCheckboxes = document.querySelectorAll('.bunch__tag input[type="checkbox"]');
+        const tagsCheckboxes = document.querySelectorAll('.bunch__tag input[type="checkbox"]');
+        const pOrientationCheckboxes = document.querySelectorAll('.p_orientation__checkbox');
+
+        const selectedTags = getSelectedInfo(tagsCheckboxes);
+        const selectedPOrientations = getSelectedInfo(pOrientationCheckboxes);
+
+        let url = 'http://127.0.0.1:8000/forum/discussions/?';
+        selectedTags.forEach((tag, index) => {
+            url += `tag[${tag.value}]=${tag.id}&`;
+        });
+        selectedPOrientations.forEach((p_orient, index) => {
+            url += `orientation[${p_orient.value}]=${p_orient.id}&`;
+        });
+        window.location.href = url;
+    });
 });

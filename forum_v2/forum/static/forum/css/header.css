@@ -231,17 +231,13 @@
     display: none;
 }
 
-/*
-#theme__toggle:checked ~ .theme__button{
-    transform: rotate(180deg);
-    transition: 0.3s ease;
-}*//*
-.theme__button.rotated {
-    transform: rotate(180deg);
-}
-*/
 [data-mode="dark"] .theme__button {
     transform: rotate(180deg);
+    transition: 0.3s ease;
+}
+
+[data-mode="light"] .theme__button {
+    transform: rotate(0deg);
     transition: 0.3s ease;
 }
 

@@ -238,7 +238,7 @@ class Discussion(models.Model):
     rating = models.SmallIntegerField(default=0, null=True, blank=True)
     status = models.CharField(choices=Status.choices, default=Status.OPENED, max_length=30, blank=False, null=True)
     theme = models.CharField(max_length=90, validators=[MinLengthValidator(4)], blank=False, null=False)
-    creation_date = models.DateField(auto_now_add=True, blank=True, null=True)
+    creation_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     content = models.CharField(max_length=700, validators=[MinLengthValidator(4)], blank=False, null=False)
 
     def get_absolute_url(self):

@@ -156,22 +156,23 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
-<div class="content-field">
-    <div class="universal-search-field custom__search__field">
-    {% for discussion in discussions %}
-        <div class="preview custom__preview" id="{{ discussion.pk }}">
-            <div class="preview-header">
-                <div class="preview-upload_date">{{ discussion.creation_date|date:"d.m.Y" }}</div>
-                <div class="preview-visitors">
-                    <svg class="svg__visitors">
-                        <use xlink:href="#icon_visitors"></use>
-                    </svg>
-                    <div class="visitors__amount">?</div>
-                </div>
-            </div>
-            <a href="{{ discussion.get_absolute_url }}" class="preview-theme custom__theme">{{ discussion.theme }}</a>
-            <div class="preview-tags">
-                {% discussion_tags discussion.discussiontags_set.all as discussion_categories %}
+    <div class="content-field">
+        <div class="universal-search-field custom__search__field">
+            {% for discussion in discussions %}
+                <div class="preview custom__preview" id="{{ discussion.pk }}">
+                    <div class="preview-header">
+                        <div class="preview-upload_date">{{ discussion.creation_date|date:"d.m.Y H:i" }}</div>
+                        <div class="preview-visitors">
+                            <svg class="svg__visitors">
+                                <use xlink:href="#icon_visitors"></use>
+                            </svg>
+                            <div class="visitors__amount">?</div>
+                        </div>
+                    </div>
+                    <a href="{{ discussion.get_absolute_url }}"
+                       class="preview-theme custom__theme">{{ discussion.theme }}</a>
+                    <div class="preview-tags">
+                        {% discussion_tags discussion.discussiontags_set.all as discussion_categories %}
                 {% for key, value in discussion_categories.items %}
                     <div class="preview-tag">{{ key }} {{ value }}</div>
                 {% endfor %}
@@ -194,34 +195,37 @@ $(document).ready(function(){
                 </div>
                 <a href="{{ discussion.get_absolute_url }}" class="preview-check custom__check">read...</a>
             </div>
-        </div>
-    {% endfor %}
-        {% if page_obj.has_other_pages %}
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="pagination__link link__clickable"><</a>
-            {% else %}
-                <a class="pagination__link link__unclickable"><</a>
-            {% endif %}
-            {% for p in page_obj.paginator.page_range %}
-                {% if page_obj.number == p %}
-                    <a href="?page={{ p }}" class="pagination__link link-selected">{{ p }}</a>
-                {% elif p >= page_obj.number|add:-3 and p <= page_obj.number|add:3 %}
-                    <a href="?page={{ p }}" class="pagination__link">{{ p }}</a>
-                {% endif %}
+                </div>
             {% endfor %}
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="pagination__link link__clickable">></a>
-            {% else %}
-                <a class="pagination__link link__unclickable">></a>
+            {% if page_obj.has_other_pages %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}"
+                           class="pagination__link link__clickable"><</a>
+                    {% else %}
+                        <a class="pagination__link link__unclickable"><</a>
+                    {% endif %}
+                    {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <a href="?{{ request.GET.urlencode }}&page={{ p }}"
+                               class="pagination__link link-selected">{{ p }}</a>
+                        {% elif p >= page_obj.number|add:-3 and p <= page_obj.number|add:3 %}
+                            <a href="?{{ request.GET.urlencode }}&page={{ p }}" class="pagination__link">{{ p }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}"
+                           class="pagination__link link__clickable">></a>
+                    {% else %}
+                        <a class="pagination__link link__unclickable">></a>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
-        {% endif %}
-    </div>
 
-    <div class="advanced_search__field">
-        <div class="search__container__footer">
-            <div class="advanced_search__sorting">Sorted by</div>
+        <div class="advanced_search__field">
+            <div class="search__container__footer">
+                <div class="advanced_search__sorting">Sorted by</div>
             <div id="advanced_search_button_2" class="advanced_search">Advanced search</div>
         </div>
         <div class="advanced_search__bunch">
@@ -236,17 +240,19 @@ $(document).ready(function(){
                 <div class="bunch__author">
                     <div class="author__lvl">
                         <div>level</div>
-                        <input type="text" maxlength="4" placeholder="from" id="author__lvl__minimal" class="author__lvl__input">
-                        <input type="text" maxlength="4" placeholder="to" id="author__lvl__maximal" class="author__lvl__input">
+                        <input type="text" maxlength="4" placeholder="from" id="author__lvl__minimal"
+                               class="author__lvl__input">
+                        <input type="text" maxlength="4" placeholder="to" id="author__lvl__maximal"
+                               class="author__lvl__input">
                     </div>
                     <div class="author__p_orientation">
-                    {% for choice in p_orient %}
-                        <label class="p_orientation__item">
-                            <input type="checkbox" class="p_orientation__checkbox" id="7" value="0">
-                            <div class="checkbox__item"></div>
-                            <div>{{ choice.1 }}</div>
-                        </label>
-                    {% endfor %}
+                        {% for p_orient in p_orients %}
+                            <label class="p_orientation__item">
+                                <input type="checkbox" class="p_orientation__checkbox" id="{{ p_orient.0 }}" value="0">
+                                <div class="checkbox__item"></div>
+                                <div>{{ p_orient.1 }}</div>
+                            </label>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="bunch__header">
@@ -254,7 +260,7 @@ $(document).ready(function(){
                     <div id="tags__reset" class="advanced_search__reset">reset</div>
                 </div>
                 <div class="bunch__tags">
-                {% for tag in tags %}
+                    {% for tag in tags %}
                     <label class="bunch__tag">
                         <input type="checkbox" class="bunch__tag__checkbox" id="{{ tag.id }}" value="0">
                         <div class="checkbox__item"></div>
