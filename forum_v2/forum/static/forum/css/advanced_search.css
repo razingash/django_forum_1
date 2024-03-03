@@ -198,7 +198,6 @@
 .bunch__footer {
     display: flex;
     justify-content: space-evenly;
-    background: var(--advanced-search-bg);
     border-radius: 10px 10px 0 0;
 }
 

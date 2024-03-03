@@ -1,4 +1,3 @@
-
 {% extends 'forum/base.html' %}
 
 {% load static %}
@@ -8,153 +7,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/discussion.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/comments_normal.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/pagination.css' %}">
+    <meta name="discussion-id" content="{{ discussion.id }}">
+    {% if request.user.is_authenticated %}
+        <meta name="user-id" content="{{ user.id }}">{% endif %}
 {% endblock %}
 
 {% block additional_js %}
     <script src="{% static 'forum/js/comments.js' %}"></script>
-<script>//комменты
-$(document).ready(function(){
-    $('.movement__annihilate').on('click', function(){
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-        var commentId = $(this).closest('.comment__field').attr('id');
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussion/{{ discussion.id }}/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'comment_delete',
-                'discussion_id': {{ discussion.id }},
-                'comment_id': commentId,
-                'user_id': {{ user.id }}
-            },
-            success: function(response) {
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
-            }
-        });
-    });
-    $('.editing__text_input').on('click', function(){
-        var commentId = $(this).closest('.comment__field').attr('id');
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-        var editedText = $(this).closest('.comment__field').find('.editing__textarea').val();
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussion/{{ discussion.id }}/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'comment_editing',
-                'discussion_id': {{ discussion.id }},
-                'comment_id': commentId,
-                'user_id': {{ user.id }},
-                'edited_text': editedText
-            },
-            success: function(response) {
-                location.reload()
-            },
-            error: function(xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST-запроса');
-            }
-        });
-    });
-    $('.reply__text_input').on('click', function(){
-        var commentId = $(this).closest('.comment__field').attr('id');
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-        var repliedText = $(this).closest('.editing__field').find('.reply__textarea').val();
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussion/{{ discussion.id }}/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'comment_reply',
-                'discussion_id': {{ discussion.id }},
-                'comment_id': commentId,
-                'user_id': {{ user.id }},
-                'repliedText': repliedText,
-            },
-            success: function(response) {
-                location.reload()
-            },
-            error: function(xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST-запроса');
-            }
-        });
-    });
-    $('.new_comment__text_input').on('click', function(){
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-        var commentText = $(this).closest('form').find('.editing__textarea').val();
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussion/{{ discussion.id }}/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'comment_new',
-                'discussion_id': {{ discussion.id }},
-                'user_id': {{ user.id }},
-                'comment_text': commentText
-            },
-            success: function(response) {
-                location.reload()
-            },
-            error: function(xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST-запроса');
-            }
-        });
-    });
-});
-</script>
-<script>//ocenka
-$(document).ready(function(){
-    var csrfToken = $('meta[name=csrf-token]').attr('content');
-    $('.grade_up').on('click', function(){
-        var commentId = $(this).closest('.comment__field').attr('id');
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussion/{{ discussion.id }}/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'comment_grade',
-                'action': 'up',
-                'comment_id': commentId,
-                'user_id': {{ user.id }}
-            },
-            success: function(response) {
-                $('#' + commentId + ' .preview-rating').text(response.new_rating);
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
-            }
-        });
-    });
-    $('.grade_down').on('click', function(){
-        var commentId = $(this).closest('.comment__field').attr('id');
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussion/{{ discussion.id }}/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'comment_grade',
-                'action': 'down',
-                'comment_id': commentId,
-                'user_id': {{ user.id }}
-            },
-            success: function(response) {
-                $('#' + commentId + ' .preview-rating').text(response.new_rating);
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
-            }
-        });
-    });
-});
-</script>
+    <script src="{% static 'forum/js/comments_ajax.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -163,7 +23,8 @@ $(document).ready(function(){
             <div class="discussion__info">
                 <div class="discussion__header">
                     <div class="discussion__creation_date">{{ discussion.creation_date|date:"d.m.Y" }}</div>
-                    <a href="{% url 'profile' discussion.creator.pk %}" class="discussion__author">{{ discussion.creator.username }}</a>
+                    <a href="{% url 'profile' discussion.creator.pk %}"
+                       class="discussion__author">{{ discussion.creator.username }}</a>
                 </div>
                 <div class="discussion__theme">{{ discussion.theme }}</div>
                 <div class="discussion__content" id="1">{{ discussion.content }}</div>

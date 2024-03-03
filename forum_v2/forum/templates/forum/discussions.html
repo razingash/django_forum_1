@@ -8,143 +8,24 @@
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/dda_search_discussions.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/pagination.css' %}">
     <meta name="csrf-token" content="{{ csrf_token }}">
+    {% if request.user.is_authenticated %}
+        <meta name="user-id" content="{{ user.id }}">{% endif %}
 {% endblock %}
 
 {% block additional_js %}
     <script src="{% static 'forum/js/advanced_search.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>//sortirovka
-    $(document).ready(function() {
-        $('.bunch__apply').on('click', function() {
-            // Создаем объект, в котором будем хранить данные для отправки на сервер
-            var tags_p = [];
-            var tags_n = [];
-            var p_orients_p = [];
-            var p_orients_n = [];
-            var csrfToken = $('meta[name=csrf-token]').attr('content');
-            var minLvl = $('#author__lvl__minimal').val().trim();
-            var maxLvl = $('#author__lvl__maximal').val().trim();
-            var level_limits = {};
-
-            // Если значения являются числовыми, добавляем их в объект postData
-            if (!isNaN(minLvl)) {
-                level_limits['min'] = minLvl;
-            }
-            if (!isNaN(maxLvl)) {
-                level_limits['max'] = maxLvl;
-            }
-
-            $('.bunch__tag__checkbox').each(function() {
-                var id = $(this).attr('id');
-                var value = $(this).val();
-
-                if (value === '1') {
-                    tags_p.push(id);
-                }
-                else if (value === '2') {
-                    tags_n.push(id);
-                }
-            });
-            $('.p_orientation__checkbox').each(function() {
-                // Получаем id и value текущего элемента
-                var id = $(this).attr('id');
-                var value = $(this).val();
-
-                if (value === '1') {
-                    p_orients_p.push(id);
-                }
-                if (value === '2') {
-                    p_orients_n.push(id);
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                headers: {
-                    'X-CSRFToken': csrfToken
-                },
-                url: "http://127.0.0.1:8000/forum/discussions/",
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    'request_type': 'advanced_search',
-                    'level_limits': level_limits,
-                    'tags_p': tags_p,
-                    'tags_n': tags_n,
-                    'p_orients_p': p_orients_p,
-                    'p_orients_n': p_orients_n
-                }),
-                success: function(response) {
-                    if (response.reload_page) {
-                        location.reload();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Ошибка при отправке POST запроса:', error);
-                }
-            });
-        });
-    });
-</script>
-<script>
-$(document).ready(function(){
-    var csrfToken = $('meta[name=csrf-token]').attr('content');
-    $('.grade_up').on('click', function(){
-        var discussion_id = $(this).closest('.preview').attr('id');
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussions/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'discussion_grade',
-                'action': 'up',
-                'discussion_id': discussion_id,
-                'user_id': {{ user.id }}
-            },
-            success: function(response) {
-                console.log(response.new_rating)
-                $('#' + discussion_id + ' .preview-rating').text(response.new_rating);
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(err);
-            }
-        });
-    });
-
-    $('.grade_down').on('click', function(){
-        var discussion_id = $(this).closest('.preview').attr('id');
-        $.post({
-            url: 'http://127.0.0.1:8000/forum/discussions/',
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            data: {
-                'request_type': 'discussion_grade',
-                'action': 'down',
-                'discussion_id': discussion_id,
-                'user_id': {{ user.id }}
-            },
-            success: function(response) {
-                console.log(response.new_rating)
-                $('#' + discussion_id + ' .preview-rating').text(response.new_rating);
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(err);
-            }
-        });
-    });
-});
-</script>
+    <script src="{% static 'forum/js/advanced_search_ajax.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<div class="advanced_search__container">
-    <div class="search__container__header">
-        <div class="advanced_search" id="advanced_search_button_1">Advanced search</div>
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'new_discussion' %}" class="new_discussion">create discussion</a>
-        {% endif %}
-        <form class="advanced_search__form">
+    <div class="advanced_search__container">
+        <div class="search__container__header">
+            <div class="advanced_search" id="advanced_search_button_1">Advanced search</div>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'new_discussion' %}" class="new_discussion">create discussion</a>
+            {% endif %}
+            <form class="advanced_search__form">
             <input type="text" placeholder="Search here..." class="search__input">
         </form>
         <div class="search__form__results">

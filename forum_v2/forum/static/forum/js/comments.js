@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     // Получаем все элементы с классом "write_checkbox"
     const writeCheckboxes = document.querySelectorAll('.write_checkbox');

@@ -10,42 +10,14 @@
 {% block additional_js %}
     <script src="{% static '/forum/js/profile.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.add_friend').click(function(event) {
-                event.preventDefault();
-                var sender_id = $(this).data('profile-id');
-                var csrfToken = $('meta[name=csrf-token]').attr('content');
-
-                var currentUrl = window.location.href
-                $.ajax({
-                    type: 'POST',
-                    url: currentUrl,
-                    headers: {
-                        'X-CSRFToken': csrfToken
-                    },
-                    data: {
-                        'event': 'friendship',
-                        'sender_id': sender_id
-                    },
-                    success: function(response) {
-                        console.log('POST запрос успешно отправлен');
-                        location.reload();
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log('Ошибка при отправке POST запроса');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{% static '/forum/js/profile_ajax.js' %}"></script>
     {% block extra_js %}{% endblock extra_js %}
 {% endblock additional_js %}
 
 {% block content %}
     <div class="profile">
         <div class="profile__face">
-            {% if not user.avatar|default_if_none:"nothing"  %}
+            {% if not user.avatar %}
                 <img src="{% static 'forum/default_avatar/avatar.png' %}" alt="wrong" class="profile__avatar">
             {% else %}
                 <img src="{{ user.avatar.url }}" alt="wrong" class="profile__avatar">

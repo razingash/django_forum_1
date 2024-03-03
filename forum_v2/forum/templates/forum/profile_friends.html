@@ -3,42 +3,16 @@
 {% load static %}
 {% block extra_js %}
     <script src="{% static '/forum/js/friends.js' %}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.delete_kick_off').on('click', function() {
-                var csrfToken = $('meta[name=csrf-token]').attr('content');
-                var friend_id = $('.delete_friend_field').data('user-id');
-                var currentUrl = window.location.href
-                $.ajax({
-                    type: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrfToken
-                    },
-                    url: currentUrl,
-                    data: {
-                        'event': 'broken friendship',
-                        'friend_id': friend_id,
-                    },
-                    success: function(response) {
-                        console.log('POST запрос выполнен успешно');
-                        location.reload();
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log('Ошибка при выполнении POST запроса');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{% static 'forum/js/profile_friends_ajax.js' %}"></script>
 {% endblock %}
 {% block extra_header %}
-<a href="{% url 'profile' user.pk %}" class="mouse-aiming second-header__item">Comments</a>
-<a href="{% url 'profile_contribution' user.pk %}" class="mouse-aiming second-header__item">Contribution</a>
-<a href="{% url 'profile_friends' user.pk %}" class="mouse-aiming second-header__item current__item">Friends</a>
-{% if request.user.is_authenticated and user.id == user_id %}
-    <a href="{% url 'profile_events' user.pk %}" class="mouse-aiming second-header__item">Events</a>
-    <a href="{% url 'profile_bans' user.pk %}" class="mouse-aiming second-header__item">Bans</a>
-{% endif %}
+    <a href="{% url 'profile' user.pk %}" class="mouse-aiming second-header__item">Comments</a>
+    <a href="{% url 'profile_contribution' user.pk %}" class="mouse-aiming second-header__item">Contribution</a>
+    <a href="{% url 'profile_friends' user.pk %}" class="mouse-aiming second-header__item current__item">Friends</a>
+    {% if request.user.is_authenticated and user.id == user_id %}
+        <a href="{% url 'profile_events' user.pk %}" class="mouse-aiming second-header__item">Events</a>
+        <a href="{% url 'profile_bans' user.pk %}" class="mouse-aiming second-header__item">Bans</a>
+    {% endif %}
 {% endblock %}
 
 {% block extra_content %}

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
 from .models import *
 
@@ -38,7 +39,7 @@ class ChangeCustomUserDescriptionForm(forms.ModelForm):
 
 class ChangeCustomUserForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
+        model = get_user_model()
         fields = ['username', 'avatar']
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form_input'}),
@@ -64,7 +65,7 @@ class ChangeCustomUserPasswordForm(SetPasswordForm):
         return cleaned_data
 
     class Meta:
-        model = CustomUser
+        model = get_user_model()
         fields = ['old_password', 'new_password1', 'new_password2']
         widgets = {
             'old_password': forms.PasswordInput(attrs={'class': 'form_input'}),

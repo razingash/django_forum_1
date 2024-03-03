@@ -413,15 +413,15 @@ class DiscussionsPage(DataMixin, ListView):
         p_orient_included = self.request.GET.getlist('orientation[include]')
         p_orient_excluded = self.request.GET.getlist('orientation[exclude]')
         print(f'p_orient_excluded:{p_orient_excluded}, p_orient_included: {p_orient_included}')
+        print(f'tags_excluded:{tags_excluded}, tags_included: {tags_included}')
         if len(p_orient_included) == 0 and len(p_orient_excluded) == 0:
-            print('CASE 1 works')
             queryset = queryset.prefetch_related('discussiontags_set__tag')
             if len(tags_included) == 0 and len(tags_excluded) == 0:
                 queryset = queryset
             elif len(tags_included) != 0 and len(tags_excluded) != 0:
-                queryset = queryset.filter(discussiontags__tag__in=tags_included).distinct().annotate(
-                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).exclude(
-                    discussiontags__tag__in=tags_excluded)
+                queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
+                    num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded)
             elif len(tags_included) != 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).distinct().annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included))
@@ -438,8 +438,7 @@ class DiscussionsPage(DataMixin, ListView):
             elif len(tags_included) != 0 and len(tags_excluded) != 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
-                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
-                    num_tags=Count('discussiontags'))
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded)
             elif len(tags_excluded) == 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
@@ -456,8 +455,7 @@ class DiscussionsPage(DataMixin, ListView):
             elif len(tags_included) != 0 and len(tags_excluded) != 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
-                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
-                    num_tags=Count('discussiontags'))
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded)
             elif len(tags_excluded) == 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
@@ -474,8 +472,7 @@ class DiscussionsPage(DataMixin, ListView):
             elif len(tags_included) != 0 and len(tags_excluded) != 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()
-                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded).annotate(
-                    num_tags=Count('discussiontags'))
+                queryset = queryset.exclude(discussiontags__tag__in=tags_excluded)
             elif len(tags_excluded) == 0:
                 queryset = queryset.filter(discussiontags__tag__in=tags_included).annotate(
                     num_tags=Count('discussiontags')).filter(num_tags=len(tags_included)).distinct()

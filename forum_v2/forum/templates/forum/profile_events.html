@@ -2,76 +2,26 @@
 
 {% load static %}
 {% block extra_header %}
-<a href="{% url 'profile' user.pk %}" class="mouse-aiming second-header__item">Comments</a>
-<a href="{% url 'profile_contribution' user.pk %}" class="mouse-aiming second-header__item">Contribution</a>
-<a href="{% url 'profile_friends' user.pk %}" class="mouse-aiming second-header__item">Friends</a>
-{% if request.user.is_authenticated and user.id == user_id %}
-    <a href="{% url 'profile_events' user.pk %}" class="mouse-aiming second-header__item current__item">Events</a>
-    <a href="{% url 'profile_bans' user.pk %}" class="mouse-aiming second-header__item">Bans</a>
-{% endif %}
+    <a href="{% url 'profile' user.pk %}" class="mouse-aiming second-header__item">Comments</a>
+    <a href="{% url 'profile_contribution' user.pk %}" class="mouse-aiming second-header__item">Contribution</a>
+    <a href="{% url 'profile_friends' user.pk %}" class="mouse-aiming second-header__item">Friends</a>
+    {% if request.user.is_authenticated and user.id == user_id %}
+        <a href="{% url 'profile_events' user.pk %}" class="mouse-aiming second-header__item current__item">Events</a>
+        <a href="{% url 'profile_bans' user.pk %}" class="mouse-aiming second-header__item">Bans</a>
+    {% endif %}
 {% endblock %}
 {% block extra_js %}
-    <script>
-    $(document).ready(function() {
-        var currentUrl = window.location.href
-        $('.event__choose-reject').on('click', function() {
-            var csrfToken = $('meta[name=csrf-token]').attr('content');
-            var possible_friend = $(this).data('user-id');
-            $.ajax({
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': csrfToken
-                },
-                url: currentUrl,
-                data: {
-                    'event': 'event__friendship',
-                    'event_type': 'reject',
-                    'sender_id': possible_friend,
-                },
-                success: function(response) {
-                    console.log('POST запрос выполнен успешно');
-                    location.reload();
-                },
-                error: function(xhr, errmsg, err) {
-                    console.log('Ошибка при выполнении POST запроса');
-                }
-            });
-        });
-        $('.event__choose-accept').on('click', function() {
-            var csrfToken = $('meta[name=csrf-token]').attr('content');
-            var possible_friend = $(this).data('user-id');
-            $.ajax({
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': csrfToken
-                },
-                url: currentUrl,
-                data: {
-                    'event': 'event__friendship',
-                    'event_type': 'accept',
-                    'sender_id': possible_friend,
-                },
-                success: function(response) {
-                    console.log('POST запрос выполнен успешно');
-                    location.reload();
-                },
-                error: function(xhr, errmsg, err) {
-                    console.log('Ошибка при выполнении POST запроса');
-                }
-            });
-        });
-    });
-    </script>
+    <script src="{% static 'forum/js/profile_events_ajax.js' %}"></script>
 {% endblock %}
 {% block extra_content %}
-{% if events %}
-{% for event in events %}
-    {% if event.event == 'friendship' %}
-        {% if event.sender__userdescription.sex == 'man' %}
-        <div class="content-field__event event__friend-man">
-        {% elif event.sender__userdescription.sex == 'woman' %}
-        <div class="content-field__event event__friend-man">
-        {% else %}
+    {% if events %}
+        {% for event in events %}
+            {% if event.event == 'friendship' %}
+                {% if event.sender__userdescription.sex == 'man' %}
+                    <div class="content-field__event event__friend-man">
+                {% elif event.sender__userdescription.sex == 'woman' %}
+                    <div class="content-field__event event__friend-man">
+                {% else %}
         <div class="content-field__event event__friend-man">
         {% endif %}
             <div class="event__sender">
