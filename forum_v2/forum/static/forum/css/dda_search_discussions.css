@@ -84,23 +84,35 @@
     justify-content: space-between;
     margin-top: 10px;
 }
-.grade_fluctuations{
+.grade_fluctuations {
     display: flex;
 }
-.grade_up, .grade_down{
+
+.grade_up, .grade_down {
     width: 12px;
     height: 19px;
     margin: 0 5px -1px 5px;
     cursor: pointer;
 }
 
-.preview-rating{
+.check_tags {
+    display: none;
+    flex-grow: 1;
+    margin-left: 10px;
+    padding: 0 10px 0 10px;
+    color: #f5deb3;
+    cursor: pointer;
+}
+
+.preview-rating {
     display: block;
 }
-.grade-standard{
+
+.grade-standard {
     color: #dbdbdb;
 }
-.grade-positive{
+
+.grade-positive {
     color: #40e62d;
 }
 .grade-negative{
@@ -121,20 +133,26 @@
     box-shadow: inset 0 10px 20px 2px #000000b3;
     border: 2px solid #f5deb37d;
 }
-.custom__theme{
-    
+
+.custom__theme {
+
 }
 
-.custom__check{
+.custom__check {
     text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;
 }
 
-@media (max-width: 768px){
-    .preview{
+.hidden_checkbox {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .preview {
         padding: 10px 10px 10px 10px;
         margin: 15px 10px 0 10px;
     }
-    .preview-tag{
+
+    .preview-tag {
         padding: 1.5px 3px 1.5px 3px;
         margin: 7px 7px 0 0;
         border-radius: 8px;
@@ -144,12 +162,26 @@
         box-shadow: none;
         border-radius: 10px;
     }
-    .custom__preview{
+
+    .custom__preview {
         border: 2px solid #f5deb375;
         box-shadow: none;
     }
-    .custom__theme{
+
+    .custom__theme {
         font-size: 1em;
+    }
+
+    .preview-tags {
+        display: none;
+    }
+
+    .hidden_checkbox:checked ~ .preview-tags {
+        display: flex;
+    }
+
+    .check_tags {
+        display: block;
     }
 }
 

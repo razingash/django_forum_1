@@ -125,7 +125,7 @@
     overflow-y: auto;
 }
 
-.search__result{
+.search__result, .search__result_empty {
     display: flex;
     flex-direction: row;
     text-decoration: none;

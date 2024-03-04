@@ -52,30 +52,34 @@
                     </div>
                     <a href="{{ discussion.get_absolute_url }}"
                        class="preview-theme custom__theme">{{ discussion.theme }}</a>
+                    <input type="checkbox" id="preview-tags_hidden_{{ discussion.id }}" class="hidden_checkbox">
+
                     <div class="preview-tags">
                         {% discussion_tags discussion.discussiontags_set.all as discussion_categories %}
-                {% for key, value in discussion_categories.items %}
-                    <div class="preview-tag">{{ key }} {{ value }}</div>
-                {% endfor %}
-            </div>
-            <div class="preview-footer">
-                <div class="grade_fluctuations">
-                    <svg class="grade_up">
-                        <use xlink:href="#icon_arrow"></use>
-                    </svg>
-                    {% if discussion.rating == 0 %}
-                        <div class="preview-rating grade-standard">{{ discussion.rating }}</div>
-                    {% elif discussion.rating > 0 %}
-                        <div class="preview-rating grade-positive">{{ discussion.rating }}</div>
-                    {% else %}
-                        <div class="preview-rating grade-negative">{{ discussion.rating }}</div>
-                    {% endif %}
-                    <svg class="grade_down">
-                        <use xlink:href="#icon_arrow_bottom"></use>
-                    </svg>
-                </div>
-                <a href="{{ discussion.get_absolute_url }}" class="preview-check custom__check">read...</a>
-            </div>
+                        {% for key, value in discussion_categories.items %}
+                            <div class="preview-tag">{{ key }} {{ value }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="preview-footer">
+                        <div class="grade_fluctuations">
+                            <svg class="grade_up">
+                                <use xlink:href="#icon_arrow"></use>
+                            </svg>
+                            {% if discussion.rating == 0 %}
+                                <div class="preview-rating grade-standard">{{ discussion.rating }}</div>
+                            {% elif discussion.rating > 0 %}
+                                <div class="preview-rating grade-positive">{{ discussion.rating }}</div>
+                            {% else %}
+                                <div class="preview-rating grade-negative">{{ discussion.rating }}</div>
+                            {% endif %}
+                            <svg class="grade_down">
+                                <use xlink:href="#icon_arrow_bottom"></use>
+                            </svg>
+                        </div>
+                        <label for="preview-tags_hidden_{{ discussion.id }}"
+                               class="check_tags custom__check">...</label>
+                        <a href="{{ discussion.get_absolute_url }}" class="preview-check custom__check">read...</a>
+                    </div>
                 </div>
             {% endfor %}
             {% if page_obj.has_other_pages %}

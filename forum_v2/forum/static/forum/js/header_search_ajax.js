@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    function sendPostRequest() {
-        var search_request = $('.search__form__input').val();
+    const csrfToken = $('meta[name=csrf-token]').attr('content');
+
+    function sendPostRequest(search_request) {
         if (search_request.length >= 4) {
-            var csrfToken = $('meta[name=csrf-token]').attr('content');
-            var request_type = $('.subject__item.active').attr('id');
+            let request_type = $('.subject__item.active').attr('id');
             $.ajax({
                 type: 'POST',
                 url: /forum/,
@@ -15,13 +15,11 @@ $(document).ready(function () {
                     'search_request': search_request
                 },
                 success: function (response) {
-                    console.log('POST запрос успешно отправлен');
                     if (response.message !== 'nothing founded') {
                         $('.search__results').empty();
                         console.log(response)
                         console.log(response.type)
                         if (response.type === 'result_users') {
-                            console.log('LAKATMATATAG')
                             response.message.forEach(function (item) {
                                 $('.search__results').append('<a href="' + item.get_absolute_url + '" class="search__result">' + item.username + '</a>');
                             });
@@ -31,7 +29,7 @@ $(document).ready(function () {
                             });
                         }
                     } else {
-                        $('.search__results').empty();
+                        $('.search__results').empty().append('<div class="search__result_empty">nothing founded</div>');
                         console.log('Ничего не найдено');
                     }
                 },
@@ -39,10 +37,13 @@ $(document).ready(function () {
                     console.log('Ошибка при отправке POST запроса');
                 }
             });
+        } else {
+            $('.search__results').empty().append('<div class="search__result_empty">nothing founded</div>');
         }
     }
 
     $('.search__form__input').on('input', function () {
-        sendPostRequest();
+        const search_request = $(this).val();
+        sendPostRequest(search_request);
     });
 });

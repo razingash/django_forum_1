@@ -35,7 +35,7 @@ class RulesPage(ListView, DataMixin):
             discussions = Discussion.objects.only('id', 'theme').order_by('theme').filter(
                 theme__icontains=search_request)[:10]
             print(discussions)
-            result = 'No discussions found'
+            result = 'nothing founded'
             if len(discussions) > 0:
                 result = [{'id': discussion.id, 'theme': discussion.theme, 'get_absolute_url': discussion.get_absolute_url()} for discussion in discussions]
             return JsonResponse({'message': result, 'type': 'result_discussions'})
@@ -44,7 +44,7 @@ class RulesPage(ListView, DataMixin):
             search_request = request.POST.get('search_request')
             users = CustomUser.objects.only('id', 'username').order_by('username').filter(
                 username__icontains=search_request)[:10]
-            result = 'No users found'
+            result = 'nothing founded'
             if len(users) > 0:
                 result = [{'id': user.id, 'username': user.username, 'get_absolute_url': user.get_absolute_url()} for user in users]
             return JsonResponse({'message': result, 'type': 'result_users'})

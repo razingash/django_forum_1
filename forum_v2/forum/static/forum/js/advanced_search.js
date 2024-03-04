@@ -114,19 +114,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.querySelector('.bunch__apply').addEventListener('click', function () {
-        //const tagsCheckboxes = document.querySelectorAll('.bunch__tag input[type="checkbox"]');
         const tagsCheckboxes = document.querySelectorAll('.bunch__tag input[type="checkbox"]');
         const pOrientationCheckboxes = document.querySelectorAll('.p_orientation__checkbox');
 
         const selectedTags = getSelectedInfo(tagsCheckboxes);
         const selectedPOrientations = getSelectedInfo(pOrientationCheckboxes);
 
-        let url = 'http://127.0.0.1:8000/forum/discussions/?';
+        let url = window.location.origin + window.location.pathname;
+        let isFirstParam = true;
         selectedTags.forEach((tag, index) => {
-            url += `tag[${tag.value}]=${tag.id}&`;
+            url += (isFirstParam ? '?' : '&') + `tag[${tag.value}]=${tag.id}`;
+            isFirstParam = false;
         });
         selectedPOrientations.forEach((p_orient, index) => {
-            url += `orientation[${p_orient.value}]=${p_orient.id}&`;
+            url += (isFirstParam ? '?' : '&') + `orientation[${p_orient.value}]=${p_orient.id}`;
+            isFirstParam = false;
         });
         window.location.href = url;
     });

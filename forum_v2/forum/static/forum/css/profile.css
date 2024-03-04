@@ -250,6 +250,8 @@
     display: none;
     flex-direction: row;
     margin: 0 3px 0 3px;
+    cursor: pointer;
+    user-select: none;
 }
 .svg__arrow{
     display: none;
@@ -259,7 +261,6 @@
 }
 .mini_categories{
     color: #f5deb3;
-    cursor: pointer;
 }
 .second-header__list{
     display: flex;
@@ -721,7 +722,7 @@
 #mini-list__toggle{
     display: none;
 }
-#mini-list__toggle:checked ~ .second-header__list{
+#mini-list__toggle:checked ~ .second-header__list {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -729,6 +730,7 @@
     top: 39px;
     right: 3px;
     left: -10px;
+    z-index: 1;
 }
 
 @media (max-width: 768px){
