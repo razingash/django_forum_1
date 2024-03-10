@@ -43,3 +43,8 @@
     background: #332f2f;
     pointer-events: none;
 }
+@media (max-width: 768px) {
+    .pagination {
+        margin: 15px;
+    }
+}

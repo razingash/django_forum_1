@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Получаем все элементы с классом "write_checkbox"
     const writeCheckboxes = document.querySelectorAll('.write_checkbox');
 
     // Проходимся по каждому элементу с классом "write_checkbox"
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const complaintField = document.querySelector(".complaint__field");
     const complaintClose = document.querySelector(".complaint__close");
 
-    // Функция для переключения отображения complaint__field на flex
     function toggleComplaintField() {
         if (complaintField.style.display === "flex") {
             complaintField.style.display = "none";
@@ -55,38 +53,35 @@ document.addEventListener("DOMContentLoaded", function() {
             complaintField.style.display = "flex";
         }
     }
-
-    // Добавляем обработчик клика на блоки movement__complaint
+    // handler for clicking on block movement__complaint
     complaints.forEach(function(complaint) {
         complaint.addEventListener("click", function() {
             toggleComplaintField();
+            let reportedUser = this.closest(".comment__field").querySelector(".comment__nickname").innerText;
 
-            // Получаем имя пользователя из блока comment__nickname
-            const reportedUser = this.closest(".comment__field").querySelector(".comment__nickname").innerText;
-
-            // Вставляем имя пользователя в блок reported__user
             document.querySelector(".reported__user").innerText = reportedUser;
         });
     });
-
-    // Добавляем обработчик клика на блок complaint__close
-    complaintClose.addEventListener("click", function() {
+    complaintClose.addEventListener("click", function () {
         complaintField.style.display = "none";
     });
 });
-
-document.addEventListener('DOMContentLoaded', function () {//editing
+//editing
+document.addEventListener('DOMContentLoaded', function () {
     const editCheckboxes = document.querySelectorAll('.editing_checkbox');
     const editingFields = document.querySelectorAll('.editing__field');
-
-    let lastCheckedIndex = -1; // Индекс последнего выбранного чекбокса
+    const annihilateButtons = document.querySelectorAll('.movement__annihilate');
+    let lastCheckedIndex = -1;
 
     editCheckboxes.forEach((checkbox, index) => {
         checkbox.addEventListener('change', function () {
             const form = editingFields[index];
             const textarea = form.querySelector('.editing__textarea');
+            const isChecked = checkbox.checked;
+            const commentField = checkbox.closest('.comment__field');
+            const commentElement = commentField.querySelector('.comment');
 
-            // Если был выбран другой чекбокс, сбрасываем его состояние
+            //if anouther checkbox was selected, then reset state of previous
             if (lastCheckedIndex !== -1 && lastCheckedIndex !== index) {
                 const lastForm = editingFields[lastCheckedIndex];
                 const lastTextarea = lastForm.querySelector('.editing__textarea');
@@ -97,15 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {//editing
                 lastCommentElement.style.display = 'block';
             }
 
-            // Устанавливаем состояние текущего чекбокса
-            const isChecked = checkbox.checked;
-            const commentField = checkbox.closest('.comment__field');
-            const commentElement = commentField.querySelector('.comment');
+            // setting state of current checkbox
             textarea.value = isChecked ? commentElement.textContent.trim() : '';
             form.style.display = isChecked ? 'flex' : 'none';
             commentElement.style.display = isChecked ? 'none' : 'block';
-
-            // Запоминаем индекс последнего выбранного чекбокса
             lastCheckedIndex = isChecked ? index : -1;
         });
     });
@@ -125,8 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {//editing
     });
 
     //annihilation
-    const annihilateButtons = document.querySelectorAll('.movement__annihilate');
-
     annihilateButtons.forEach(button => {
         button.addEventListener('click', function() {
             const commentsField = button.closest('.comments__field');

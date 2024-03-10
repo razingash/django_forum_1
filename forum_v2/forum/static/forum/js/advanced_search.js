@@ -1,16 +1,15 @@
 //advanced search for DDA
 document.addEventListener('DOMContentLoaded', function () {
-    // Получаем все чекбоксы
+    // getting all checkboxes
     const PolitOrientationCheckboxes = document.querySelectorAll('.p_orientation__item input[type="checkbox"]');
     const TagsCheckboxes = document.querySelectorAll('.bunch__tag input[type="checkbox"]');
     const UserInfoReset = document.getElementById('user_info__reset')
     const TagsReset = document.getElementById('tags__reset')
-    //открытие\закрытие нижнего меню
+    //hidden search bar
     const ContainerAS = document.querySelector('.advanced_search__bunch');
     const ButtonAS1 = document.getElementById('advanced_search_button_1');
     const ButtonAS2 = document.getElementById('advanced_search_button_2');
     const ButtonCancle = document.querySelector('.bunch__cancle');
-    //очистка level
     const MinAuthorLevel = document.getElementById('author__lvl__minimal');
     const MaxAuthorLevel = document.getElementById('author__lvl__maximal');
 
@@ -29,14 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ButtonAS2.addEventListener("click", function() {
         ContainerAS.style.bottom = "0";
     });
-
-    // Добавляем обработчик события для ButtonAS1
     ButtonAS1.addEventListener('click', toggleContainerAS);
-
-    // Добавляем обработчик события для ButtonAS2
-    //ButtonAS2.addEventListener('click', toggleContainerAS);
-
-    //сброс value
+    //resets
     UserInfoReset.addEventListener('click', function () {
         MinAuthorLevel.value = "";
         MaxAuthorLevel.value = "";
@@ -52,16 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
             updateCheckboxState(checkbox);
         });
     });
-
-    // Применяем сохраненные состояния для PolitOrientation
+    // saving states of checkboxes
     PolitOrientationCheckboxes.forEach((checkbox) => {
         updateCheckboxState(checkbox);
     });
     TagsCheckboxes.forEach((checkbox) => {
         updateCheckboxState(checkbox);
     });
-
-    // Добавляем обработчик события для каждого чекбокса
+    // updating checkboxes states
     PolitOrientationCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener('click', function () {
             updateCheckbox(checkbox);
@@ -81,17 +72,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCheckboxState(checkbox) {
-        // Удаляем все классы состояний у чекбокса
-        checkbox.parentElement.classList.remove('state_0', 'state_1', 'state_2');//
-
-        // Получаем текущее значение
+        // removing checkboxes states
+        checkbox.parentElement.classList.remove('state_0', 'state_1', 'state_2');
         let currentValue = parseInt(checkbox.value);
-
-        // Добавляем класс состояния только выбранному чекбоксу, соответствующему текущему значению
+        //state is added only for selected checkbox
         checkbox.parentElement.classList.add(`state_${currentValue}`);//
     }
 });
-
 
 document.addEventListener('DOMContentLoaded', function () {
     function getSelectedInfo(checkboxes) {
@@ -112,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         return selectedTags;
     }
-
     document.querySelector('.bunch__apply').addEventListener('click', function () {
         const tagsCheckboxes = document.querySelectorAll('.bunch__tag input[type="checkbox"]');
         const pOrientationCheckboxes = document.querySelectorAll('.p_orientation__checkbox');

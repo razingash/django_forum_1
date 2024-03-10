@@ -17,8 +17,8 @@ $(document).ready(function () {
                 console.log('POST запрос выполнен успешно');
                 location.reload();
             },
-            error: function (xhr, errmsg, err) {
-                console.log('Ошибка при выполнении POST запроса');
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });

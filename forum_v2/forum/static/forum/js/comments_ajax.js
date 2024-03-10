@@ -5,7 +5,7 @@ $(document).ready(function() {
     const userId = $('meta[name="user-id"]').attr('content');
     const discussionId = $('meta[name="discussion-id"]').attr('content');
     $('.movement__annihilate').on('click', function () {
-        var commentId = $(this).closest('.comment__field').attr('id');
+        let commentId = $(this).closest('.comment__field').attr('id');
         $.post({
             url: currentUrl,
             headers: {
@@ -20,14 +20,14 @@ $(document).ready(function() {
             success: function (response) {
                 console.log('success')
             },
-            error: function (xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
     $('.editing__text_input').on('click', function () {
-        var commentId = $(this).closest('.comment__field').attr('id');
-        var editedText = $(this).closest('.comment__field').find('.editing__textarea').val();
+        let commentId = $(this).closest('.comment__field').attr('id');
+        let editedText = $(this).closest('.comment__field').find('.editing__textarea').val();
         $.post({
             url: currentUrl,
             headers: {
@@ -43,14 +43,14 @@ $(document).ready(function() {
             success: function (response) {
                 location.reload()
             },
-            error: function (xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST-запроса');
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
     $('.reply__text_input').on('click', function () {
-        var commentId = $(this).closest('.comment__field').attr('id');
-        var repliedText = $(this).closest('.editing__field').find('.reply__textarea').val();
+        let commentId = $(this).closest('.comment__field').attr('id');
+        let repliedText = $(this).closest('.editing__field').find('.reply__textarea').val();
         $.post({
             url: currentUrl,
             headers: {
@@ -66,14 +66,14 @@ $(document).ready(function() {
             success: function (response) {
                 location.reload()
             },
-            error: function (xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST-запроса');
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
     $('.new_comment__text_input').on('click', function () {
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-        var commentText = $(this).closest('form').find('.editing__textarea').val();
+        let csrfToken = $('meta[name=csrf-token]').attr('content');
+        let commentText = $(this).closest('form').find('.editing__textarea').val();
         $.post({
             url: currentUrl,
             headers: {
@@ -88,15 +88,14 @@ $(document).ready(function() {
             success: function (response) {
                 location.reload()
             },
-            error: function (xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST-запроса');
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
-
     //grading
     $('.grade_up').on('click', function () {
-        var commentId = $(this).closest('.comment__field').attr('id');
+        let commentId = $(this).closest('.comment__field').attr('id');
         $.post({
             url: currentUrl,
             headers: {
@@ -111,13 +110,13 @@ $(document).ready(function() {
             success: function (response) {
                 $('#' + commentId + ' .preview-rating').text(response.new_rating);
             },
-            error: function (xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
     $('.grade_down').on('click', function(){
-        var commentId = $(this).closest('.comment__field').attr('id');
+        let commentId = $(this).closest('.comment__field').attr('id');
         $.post({
             url: currentUrl,
             headers: {
@@ -132,8 +131,8 @@ $(document).ready(function() {
             success: function (response) {
                 $('#' + commentId + ' .preview-rating').text(response.new_rating);
             },
-            error: function (xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });

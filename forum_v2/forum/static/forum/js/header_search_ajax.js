@@ -33,8 +33,8 @@ $(document).ready(function () {
                         console.log('Ничего не найдено');
                     }
                 },
-                error: function (xhr, errmsg, err) {
-                    console.log('Ошибка при отправке POST запроса');
+                error: function (xhr, status, error) {
+                    console.error('Error during sending POST request:', error);
                 }
             });
         } else {

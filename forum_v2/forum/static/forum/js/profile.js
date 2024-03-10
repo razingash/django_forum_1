@@ -1,4 +1,4 @@
-// Карточка пользователя
+//user card
 document.addEventListener('DOMContentLoaded', function() {
     const profileCard = document.querySelector('.profile__card');
     const closeBtn = document.querySelector('.card__close');
@@ -15,20 +15,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-// заголовок поиска в профиле
-/*
-document.addEventListener('DOMContentLoaded', function() {
-    var items2 = document.querySelectorAll('.second-header__item');
-    items2[0].classList.add('current__item');
-
-    items2.forEach(function(item) {
-        item.addEventListener('click', function() {
-
-          items2.forEach(function(innerItem) {
-            innerItem.classList.remove('current__item');
-          });
-
-          item.classList.add('current__item');
-        });
-    });
-});*/

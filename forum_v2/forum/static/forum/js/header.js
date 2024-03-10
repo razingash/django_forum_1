@@ -8,14 +8,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const crossButton2 = document.querySelector('.header__search');
     const searchContainer = document.querySelector('.search__container');
     const searchResults = document.querySelector('.search__results')
+    //switching theme
+    const changeThemeButton = document.querySelector('.theme__button');
+    const htmlElement = document.querySelector('html');
 
-    var items = document.querySelectorAll('.subject__item');
+    let items = document.querySelectorAll('.subject__item');
     items[0].classList.add('active');
 
-    crossButton.addEventListener('click', function() {
+    crossButton.addEventListener('click', function () {
         searchContainer.classList.remove('active');
     });
-    crossButton2.addEventListener('click', function() {
+    crossButton2.addEventListener('click', function () {
         searchContainer.classList.add('active');
     });
 
@@ -30,14 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const changeThemeButton = document.querySelector('.theme__button');
-    const htmlElement = document.querySelector('html');
-
-
+    //switching theme
     changeThemeButton.addEventListener('click', function () {
         const currentTheme = htmlElement.getAttribute('data-mode');
         if (currentTheme === 'dark') {

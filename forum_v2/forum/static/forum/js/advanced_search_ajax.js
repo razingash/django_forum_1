@@ -1,15 +1,16 @@
 //sorting
 $(document).ready(function () {
+    const currentUrl = window.location.href
+    const csrfToken = $('meta[name=csrf-token]').attr('content');
+    const userId = $('meta[name="user-id"]').attr('content');
     $('.bunch__apply').on('click', function () {
-        var tags_p = [];
-        var tags_n = [];
-        var p_orients_p = [];
-        var p_orients_n = [];
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-        var minLvl = $('#author__lvl__minimal').val().trim();
-        var maxLvl = $('#author__lvl__maximal').val().trim();
-        var level_limits = {};
-        var currentUrl = window.location.href
+        let tags_p = [];
+        let tags_n = [];
+        let p_orients_p = [];
+        let p_orients_n = [];
+        let minLvl = $('#author__lvl__minimal').val().trim();
+        let maxLvl = $('#author__lvl__maximal').val().trim();
+        let level_limits = {};
 
         if (!isNaN(minLvl)) {
             level_limits['min'] = minLvl;
@@ -19,8 +20,8 @@ $(document).ready(function () {
         }
 
         $('.bunch__tag__checkbox').each(function () {
-            var id = $(this).attr('id');
-            var value = $(this).val();
+            let id = $(this).attr('id');
+            let value = $(this).val();
 
             if (value === '1') {
                 tags_p.push(id);
@@ -29,9 +30,9 @@ $(document).ready(function () {
             }
         });
         $('.p_orientation__checkbox').each(function () {
-            // Получаем id и value текущего элемента
-            var id = $(this).attr('id');
-            var value = $(this).val();
+            // getting id and value of current element
+            let id = $(this).attr('id');
+            let value = $(this).val();
 
             if (value === '1') {
                 p_orients_p.push(id);
@@ -62,18 +63,13 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Ошибка при отправке POST запроса:', error);
+                console.error('Error during sending POST request:', error);
             }
         });
     });
-});
-//grading
-$(document).ready(function () {
-    var csrfToken = $('meta[name=csrf-token]').attr('content');
-    var currentUrl = window.location.href
-    var userId = $('meta[name="user-id"]').attr('content');
+    //grading
     $('.grade_up').on('click', function () {
-        var discussion_id = $(this).closest('.preview').attr('id');
+        let discussion_id = $(this).closest('.preview').attr('id');
         $.post({
             url: currentUrl,
             headers: {
@@ -89,14 +85,13 @@ $(document).ready(function () {
                 console.log(response.new_rating)
                 $('#' + discussion_id + ' .preview-rating').text(response.new_rating);
             },
-            error: function (xhr, errmsg, err) {
-                console.log(err);
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
-
     $('.grade_down').on('click', function () {
-        var discussion_id = $(this).closest('.preview').attr('id');
+        let discussion_id = $(this).closest('.preview').attr('id');
         $.post({
             url: currentUrl,
             headers: {
@@ -112,8 +107,8 @@ $(document).ready(function () {
                 console.log(response.new_rating)
                 $('#' + discussion_id + ' .preview-rating').text(response.new_rating);
             },
-            error: function (xhr, errmsg, err) {
-                console.log(err);
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });

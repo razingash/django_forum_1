@@ -1,10 +1,9 @@
 $(document).ready(function () {
+    const csrfToken = $('meta[name=csrf-token]').attr('content');
+    const sender_id = $(this).data('profile-id');
+    const currentUrl = window.location.href
     $('.add_friend').click(function (event) {
         event.preventDefault();
-        var sender_id = $(this).data('profile-id');
-        var csrfToken = $('meta[name=csrf-token]').attr('content');
-
-        var currentUrl = window.location.href
         $.ajax({
             type: 'POST',
             url: currentUrl,
@@ -19,8 +18,8 @@ $(document).ready(function () {
                 console.log('POST запрос успешно отправлен');
                 location.reload();
             },
-            error: function (xhr, errmsg, err) {
-                console.log('Ошибка при отправке POST запроса');
+            error: function (xhr, status, error) {
+                console.error('Error during sending POST request:', error);
             }
         });
     });
