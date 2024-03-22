@@ -14,8 +14,9 @@
 
 {% block additional_js %}
     <script src="{% static 'forum/js/advanced_search.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'forum/js/advanced_search_ajax.js' %}"></script>
+    {% if request.user.is_authenticated %}
+        <script src="{% static 'forum/js/advanced_search_ajax.js' %}"></script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

@@ -482,11 +482,12 @@ class DiscussionsPage(DataMixin, ListView):
         return queryset
 
     def post(self, request, *args, **kwargs):
-        # print(request.POST)
         if request.POST.get('request_type') == 'discussion_grade':
             action = request.POST.get('action')
             discussion_id = request.POST.get('discussion_id')
             grader_id = request.POST.get('user_id')
+            if grader_id is None:
+                return JsonResponse({'message': 'mistake'})
             if Discussion.objects.filter(id=discussion_id).exclude(creator_id=grader_id):
                 discussion = Discussion.objects.get(id=discussion_id)
                 if not DiscussionGrades.objects.filter(discussion_id=discussion_id, user_id=grader_id).exists():
@@ -552,6 +553,8 @@ class DiscussionPage(DataMixin, DetailView):
             action = request.POST.get('action')
             comment_id = request.POST.get('comment_id')
             grader_id = request.POST.get('user_id')
+            if grader_id is None:
+                return JsonResponse({'message': 'mistake'})
             if Comments.objects.filter(id=comment_id).exclude(author_id=grader_id).exists():
                 comment = Comments.objects.get(id=comment_id)
                 if not CommentsRating.objects.filter(comment_id=comment_id, user_id=grader_id).exists():
