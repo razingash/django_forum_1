@@ -73,8 +73,8 @@ def get_comments_filtered_ordered(user_id):
 
 def get_profile_info(profile_id):
     user_des = Prefetch('userdescription', queryset=main_layout(objects=UserDescription.objects, only=(
-    'id', 'sex', 'birth_date', 'political_orientation',
-    'art_style', 'ideology', 'credo', 'description', 'user_id')))
+        'id', 'sex', 'birth_date', 'political_orientation', 'art_style', 'ideology', 'credo', 'description',
+        'user_id')))
     user_spec = Prefetch('userspecializations_set__specialization', queryset=Specializations.objects.all())
     queryset = CustomUser.objects.filter(id=profile_id).prefetch_related(user_des, 'userspecializations_set',
                                                                          user_spec).only('id', 'username', 'avatar',

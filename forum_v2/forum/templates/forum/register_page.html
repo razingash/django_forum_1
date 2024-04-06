@@ -4,17 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>{{ title }}</title>
+    <link rel="icon" type="images/x-icon" href="{% static 'forum/favicon/favicon.ico' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/critical.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'forum/css/auth_beta.css' %}">
 </head>
 <body>
-    <div class="section__form__reglog">
-        <div class="containter__form">
-            <div class="container__header">
-                <a href="{% url 'login' %}" class="header__item">login</a>
-            </div>
-            <form class="form__login" method="post">
+<div class="section__form__reglog">
+    <div class="containter__form">
+        <div class="container__header">
+            <a href="{% url 'login' %}" class="header__item">login</a>
+        </div>
+        <form class="form__login" method="post">
                 {% csrf_token %}
                 {% for f in form %}
                     <div class="form__row">
